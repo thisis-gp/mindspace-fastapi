@@ -14,11 +14,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Path to your service account key file
-cred = credentials.Certificate('SERVICE_ACCOUNT_KEY_PATH')
+cred = credentials.Certificate(os.getenv('SERVICE_ACCOUNT_KEY_PATH'))
 
 # Initialize the app with a service account, granting admin privileges
 firebase_admin.initialize_app(cred, {
-    'databaseURL': 'DATABASE_URL'
+    'databaseURL': os.getenv('DATABASE_URL')
 })
 
 # FastAPI instance
@@ -27,7 +27,7 @@ app = FastAPI()
 # Allow CORS from React's localhost:3000
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['APP_LINK'],  # Or you can specify your React app URL
+    allow_origins=[os.getenv('APP_LINK')],  # Or you can specify your React app URL
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -39,7 +39,7 @@ class UserMessage(BaseModel):
     message: str
 
 # Token for authenticating with the Gemini API
-GEMINI_API_KEY = "GEMINI_API_KEY"
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=GEMINI_API_KEY)
 
 # Create the model
