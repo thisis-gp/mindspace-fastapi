@@ -28,7 +28,7 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     # allow_origins=[os.getenv('APP_LINK')],  # Or you can specify your React app URL
-    allow_origins=["https://mind-space-phi.vercel.app/"],
+    allow_origins=["https://mind-space-phi.vercel.app"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
