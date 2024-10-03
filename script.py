@@ -28,7 +28,7 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     # allow_origins=[os.getenv('APP_LINK')],  # Or you can specify your React app URL
-    allow_origins=["*"],
+    allow_origins=["https://mind-space-phi.vercel.app/"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -77,19 +77,18 @@ def speak(text):
 async def start_chat(user_id: str, user_message: UserMessage):
     user_input = user_message.message
     print(f"User ({user_id}): {user_input}")
-
+    response = model.start_chat(history=[])
+    
     if user_input.lower() == "exit":
+        ref = db.reference(f'users/{user_id}')
+        ai_response = response.send_message("Generate report:")
+        ref.update({"report": ai_response.text})
         return {"message": "Take care! Feel free to return whenever you need."}
 
-    response = model.start_chat(history=[])
     ai_response = response.send_message(user_input)
 
     # Optionally generate speech from AI response
     audio_file = speak(ai_response.text)
-
-    # Store report in Firebase if needed
-    ref = db.reference(f'users/{user_id}')
-    ref.update({"last_response": ai_response.text})  # Adjust as needed
 
     return JSONResponse(content={"response": ai_response.text, "audio_file": audio_file}, status_code=200)
 
