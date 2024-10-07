@@ -19,9 +19,11 @@ load_dotenv()
 
 # Path to your service account key file
 cred = credentials.Certificate(os.getenv('SERVICE_ACCOUNT_KEY_PATH'))
+cred = credentials.Certificate(os.getenv('SERVICE_ACCOUNT_KEY_PATH'))
 
 # Initialize the app with a service account, granting admin privileges
 firebase_admin.initialize_app(cred, {
+    'databaseURL': os.getenv('DATABASE_URL')
     'databaseURL': os.getenv('DATABASE_URL')
 })
 
@@ -43,6 +45,7 @@ class UserMessage(BaseModel):
     message: str
 
 # Token for authenticating with the Gemini API
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=GEMINI_API_KEY)
 
@@ -94,6 +97,9 @@ async def start_chat(user_id: str, user_message: UserMessage):
     response = model.start_chat(history=[])
 
     if user_input.lower() == "exit":
+        ref = db.reference(f'users/{user_id}')
+        ai_response = response.send_message("Generate report:")
+        ref.update({"report": ai_response.text})
         ref = db.reference(f'users/{user_id}')
         ai_response = response.send_message("Generate report:")
         ref.update({"report": ai_response.text})
