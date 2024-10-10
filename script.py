@@ -256,18 +256,18 @@ async def start_chat(user_id: str, user_message: UserMessage):
     print(f"Detected language: {detected_lang}")
 
     # Convert AI response to speech using the detected language in memory
-    audio_file = speak(ai_response.text, detected_lang)
+    #audio_file = speak(ai_response.text, detected_lang)
 
     # Convert audio bytes to numpy array
-    audio_bytes = np.frombuffer(audio_file.getvalue(), dtype=np.float32)
+    #audio_bytes = np.frombuffer(audio_file.getvalue(), dtype=np.float32)
 
     # Check for NaN values and replace them
-    if np.isnan(audio_bytes).any():
-        audio_bytes = np.nan_to_num(audio_bytes)
+    #if np.isnan(audio_bytes).any():
+        #audio_bytes = np.nan_to_num(audio_bytes)
 
     # Convert audio bytes to bytes for Base64 encoding
-    audio_bytes = audio_bytes.tobytes()
-    audio_base64 = base64.b64encode(audio_bytes).decode('utf-8')
+    #audio_bytes = audio_bytes.tobytes()
+    #audio_base64 = base64.b64encode(audio_bytes).decode('utf-8')
 
-    return JSONResponse(content={"response": ai_response.text, "audio": audio_base64}, status_code=200)
+    return JSONResponse(content={"response": ai_response.text}, status_code=200)
 
