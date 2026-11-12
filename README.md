@@ -17,7 +17,7 @@ AI-powered backend for mental health companion application featuring multilingua
 - **Text-to-Speech**  
   🔊 Dynamic audio responses with language-specific accents
 - **Safety Protocols**  
-  🛡️ Content moderation and ethical AI guidelines
+  🛡️ Safety and ethics guidelines in the system prompt (no separate moderation layer)
 - **Severity Analysis**  
   📈 Symptom-based scoring system for mental health assessment
 
@@ -30,6 +30,10 @@ AI-powered backend for mental health companion application featuring multilingua
 **AI Services**  
 [![Gemini](https://img.shields.io/badge/Google%20Gemini-4285F4?style=flat&logo=google&logoColor=white)](https://deepmind.google/technologies/gemini/)
 [![gTTS](https://img.shields.io/badge/gTTS-00C300?style=flat&logo=google-cloud&logoColor=white)](https://gtts.readthedocs.io/)
+
+MindSpace is an AI companion and not a substitute for professional help. In India, call Tele-MANAS on 14416 (free, 24x7) or 112 in an emergency.
+
+Best Intervention Award, TYCL Mental Health Exhibition 2024.
 
 ## Installation 💻
 
